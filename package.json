@@ -1,0 +1,22 @@
+{
+  "name": "cassandra-server",
+  "version": "0.0.1",
+  "description": "A thin javascript wrapper to control a Cassandra server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:varunmc/cassandra-server.git"
+  },
+  "keywords": [
+    "cassandra"
+  ],
+  "author": "Varun Chandran <varunmc@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/varunmc/cassandra-server/issues"
+  },
+  "homepage": "https://www.github.com/varunmc/cassandra-server"
+}
