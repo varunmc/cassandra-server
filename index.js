@@ -37,3 +37,21 @@ function resolveOptions(options) {
 
 var cassandra = {};
 module.exports = cassandra;
+
+/**
+ * Deletes the entire database.
+ * @returns {Promise}
+ */
+cassandra.reset = function() {
+	var deferred = Q.defer();
+
+	// if running
+	if(child) {
+		deferred.reject(new Error('Cannot delete database when cassandra is running'));
+		return deferred.promise;
+	}
+
+	winston.warn('Deleting all data in the database');
+	return Q.nfcall(fs.remove, path.resolve('apache-cassandra-2.1.0/data'))
+		.then(Q.nfcall(fs.remove, path.resolve('apache-cassandra-2.1.0/logs')));
+};
