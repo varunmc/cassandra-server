@@ -1,7 +1,7 @@
 {
   "name": "cassandra-server",
-  "version": "0.0.1",
-  "description": "Wrapper around to provide out of the box server support",
+  "version": "1.0.0",
+  "description": "Wrapper around Apache Cassandra to provide out of the box server support",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

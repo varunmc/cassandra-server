@@ -86,14 +86,14 @@ cassandra.start = function(options) {
 
 	// if already started
 	if(child) {
-		winston.warn('cassandra has already started');
+		winston.warn('Cassandra has already started');
 		return Q();
 	}
 
 	var deferred = Q.defer(),
 		timeoutId;
 
-	winston.info('Starting cassandra with user options:', options);
+	winston.info('Starting Cassandra with user options:', options);
 
 	resolveOptions(options)
 		// start the server
@@ -182,7 +182,7 @@ cassandra.stop = function() {
 
 	// function to stop the server
 	function doStop() {
-		winston.info('Stopping cassandra');
+		winston.info('Stopping Cassandra');
 
 		child.kill();
 		child = client = undefined;
