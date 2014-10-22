@@ -1,6 +1,7 @@
 'use strict';
 
-var fs = require('fs-extra'),
+var Client = require('cassandra-driver').Client,
+	fs = require('fs-extra'),
 	path = require('path'),
 	Q = require('q'),
 	stripJsonComments = require('strip-json-comments'),
@@ -9,6 +10,21 @@ var fs = require('fs-extra'),
 
 // the server process
 var child;
+
+// the cassandra client
+var client;
+
+/**
+ * Configures the Cassandra client.
+ * @private
+ * @param {string[]} hosts - the list of contact points
+ */
+function configureClient(hosts) {
+	client = new Client({contactPoints: hosts});
+	client.connect = Q.nbind(client.connect, client);
+	client.execute = Q.nbind(client.execute, client);
+	client.shutdown = Q.nbind(client.shutdown, client);
+}
 
 /**
  * Creates a YAML configuration file by merging user options with defaults.
@@ -54,4 +70,32 @@ cassandra.reset = function() {
 	winston.warn('Deleting all data in the database');
 	return Q.nfcall(fs.remove, path.resolve('apache-cassandra-2.1.0/data'))
 		.then(Q.nfcall(fs.remove, path.resolve('apache-cassandra-2.1.0/logs')));
+};
+
+/**
+ * Stops the server.
+ * @returns {Promise}
+ */
+cassandra.stop = function() {
+	// if already stopped
+	if(!child) {
+		return Q();
+	}
+
+	// function to stop the server
+	function doStop() {
+		winston.info('Stopping cassandra');
+		child.kill();
+		child = undefined;
+		return Q();
+	}
+
+	// if the client couldn't connect
+	if(!client) {
+		return doStop();
+	}
+
+	// shutdown the client
+	return client.shutdown()
+		.then(doStop);
 };
