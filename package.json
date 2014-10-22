@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: No tests specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,13 @@
   "bugs": {
     "url": "https://github.com/varunmc/cassandra-server/issues"
   },
-  "homepage": "https://www.github.com/varunmc/cassandra-server"
+  "homepage": "https://www.github.com/varunmc/cassandra-server",
+  "dependencies": {
+    "fs-extra": "^0.12.0",
+    "js-yaml": "^3.2.2",
+    "path": "^0.4.9",
+    "q": "^1.0.1",
+    "strip-json-comments": "^1.0.2",
+    "winston": "^0.8.1"
+  }
 }
