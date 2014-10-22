@@ -1,7 +1,7 @@
 {
   "name": "cassandra-server",
   "version": "0.0.1",
-  "description": "A thin javascript wrapper to control a Cassandra server",
+  "description": "Wrapper around to provide out of the box server support",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
