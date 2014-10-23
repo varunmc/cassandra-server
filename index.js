@@ -22,6 +22,8 @@ var client;
  */
 function configureClient(hosts) {
 	client = new Client({contactPoints: hosts});
+
+	// promisify client methods
 	client.connect = Q.nbind(client.connect, client);
 	client.execute = Q.nbind(client.execute, client);
 	client.shutdown = Q.nbind(client.shutdown, client);
@@ -45,7 +47,7 @@ function resolveOptions(options) {
 					defaults[property] = options[property];
 				}
 			}
-			winston.debug('Resolved cassandra options are:', options);
+			winston.debug('Resolved cassandra options are:', defaults);
 
 			// create yaml file
 			return Q.nfcall(fs.writeFile, path.resolve('apache-cassandra-2.1.0/conf/cassandra.yaml'), yaml.dump(defaults))
@@ -94,7 +96,6 @@ cassandra.start = function(options) {
 		timeoutId;
 
 	winston.info('Starting Cassandra with user options:', options);
-
 	resolveOptions(options)
 		// start the server
 		.then(function(merged) {
