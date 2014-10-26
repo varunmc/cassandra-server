@@ -12,7 +12,9 @@
     "url": "git@github.com:varunmc/cassandra-server.git"
   },
   "keywords": [
-    "cassandra"
+    "apache",
+    "cassandra",
+    "server"
   ],
   "author": "Varun Chandran <varunmc@gmail.com>",
   "bugs": {
