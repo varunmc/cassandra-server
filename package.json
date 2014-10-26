@@ -1,7 +1,7 @@
 {
   "name": "cassandra-server",
-  "version": "1.0.2",
-  "description": "Wrapper around Apache Cassandra to provide out of the box server support",
+  "version": "1.1.0",
+  "description": "A thin Javascript wrapper around Apache Cassandra to provide out of the box server support",
   "keywords": [
     "apache",
     "cassandra",

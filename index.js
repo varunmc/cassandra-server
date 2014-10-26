@@ -12,10 +12,7 @@ var childProcess = require('child_process'),
 // the server process
 var child;
 
-// the cassandra client
-var client;
-
-// the cassandra log levels
+// the Cassandra log levels
 var levels = ['trace', 'debug', 'info', 'warn'];
 
 /**
@@ -24,12 +21,12 @@ var levels = ['trace', 'debug', 'info', 'warn'];
  * @param {string[]} hosts - the list of contact points
  */
 function configureClient(hosts) {
-	client = new Client({contactPoints: hosts});
+	cassandra.client = new Client({contactPoints: hosts});
 
 	// promisify client methods
-	client.connect = Q.nbind(client.connect, client);
-	client.execute = Q.nbind(client.execute, client);
-	client.shutdown = Q.nbind(client.shutdown, client);
+	cassandra.client.connect = Q.nbind(cassandra.client.connect, cassandra.client);
+	cassandra.client.execute = Q.nbind(cassandra.client.execute, cassandra.client);
+	cassandra.client.shutdown = Q.nbind(cassandra.client.shutdown, cassandra.client);
 }
 
 /**
@@ -40,7 +37,7 @@ function configureClient(hosts) {
  */
 function resolveOptions(options) {
 	var jsonFileName = path.resolve('cassandra.json');
-	winston.debug('Reading %s for default configuration', jsonFileName);
+	winston.debug('Reading default configuration:', jsonFileName);
 
 	return Q.nfcall(fs.readFile, jsonFileName, 'utf-8')
 		.then(function(json) {
@@ -52,7 +49,7 @@ function resolveOptions(options) {
 					defaults[property] = options[property];
 				}
 			}
-			winston.debug('Resolved cassandra options are:', defaults);
+			winston.debug('Resolved Cassandra options are:', defaults);
 
 			var yamlFileName = path.resolve('apache-cassandra-2.1.0/conf/cassandra.yaml');
 			winston.debug('Creating YAML configuration file:', yamlFileName);
@@ -66,16 +63,19 @@ function resolveOptions(options) {
 var cassandra = {};
 module.exports = cassandra;
 
+// the Cassandra client
+cassandra.client = undefined;
+
 /**
- * Deletes the entire database.
+ * Nukes the entire database.
  * @returns {Promise}
  */
-cassandra.reset = function() {
+cassandra.nuke = function() {
 	var deferred = Q.defer();
 
 	// if running
 	if(child) {
-		deferred.reject(new Error('Cannot delete database when cassandra is running'));
+		deferred.reject(new Error('Cannot delete database when Cassandra is running'));
 		return deferred.promise;
 	}
 
@@ -85,23 +85,47 @@ cassandra.reset = function() {
 };
 
 /**
+ * Restarts the server.
+ * @returns {Promise} - a promise that resolves to the Cassandra client
+ */
+cassandra.restart = function() {
+	var deferred = Q.defer();
+
+	cassandra.stop()
+		.then(function() {
+			winston.info('Waiting three seconds before starting');
+			setTimeout(function() {
+				cassandra.start()
+					.then(function(client) {
+						deferred.resolve(client);
+					})
+					.catch(function(err) {
+						deferred.reject(err);
+					});
+			}, 3000);
+		});
+
+	return deferred.promise;
+};
+
+/**
  * Starts the server.
- * @param {Object} [options] - user options
- * @returns {Promise}
+ * @param {Object} [options] - the server options
+ * @returns {Promise} - a promise that resolves to the Cassandra client
  */
 cassandra.start = function(options) {
 	options = options || {};
 
-	// if already started
-	if(child) {
-		winston.warn('Cassandra has already started');
-		return Q();
-	}
-
 	var deferred = Q.defer(),
 		timeoutId;
 
-	winston.info('Starting Cassandra with user options:', options);
+	// if already started
+	if(child) {
+		winston.warn('Cassandra is already started');
+		return deferred.resolve(client);
+	}
+
+	winston.info('Starting Cassandra with options:', options);
 	resolveOptions(options)
 		// start the server
 		.then(function(merged) {
@@ -127,7 +151,10 @@ cassandra.start = function(options) {
 				if(timeoutId) {
 					clearTimeout(timeoutId);
 					timeoutId = undefined;
-					deferred.reject();
+
+					var error = new Error('Could not start Cassandra');
+					winston.error(error);
+					deferred.reject(error);
 				}
 				winston.info('Cassandra exited with code:', code);
 			});
@@ -157,11 +184,14 @@ cassandra.start = function(options) {
 				configureClient(['localhost']);
 
 				// resolve the startup promise when the client connects
-				client.connect()
+				cassandra.client.connect()
 					.then(function() {
-						deferred.resolve();
+						timeoutId = undefined;
+						deferred.resolve(cassandra.client);
 					})
 					.catch(function(err) {
+						timeoutId = undefined;
+
 						var error = new Error('Could not connect to Cassandra');
 						error.cause = err;
 						winston.error(error);
@@ -185,6 +215,7 @@ cassandra.start = function(options) {
 cassandra.stop = function() {
 	// if already stopped
 	if(!child) {
+		winston.info('Cassandra is already stopped');
 		return Q();
 	}
 
@@ -193,16 +224,16 @@ cassandra.stop = function() {
 		winston.info('Stopping Cassandra');
 
 		child.kill();
-		child = client = undefined;
+		child = cassandra.client = undefined;
 		return Q();
 	}
 
 	// if the client couldn't connect
-	if(!client) {
+	if(!cassandra.client) {
 		return doStop();
 	}
 
 	// shutdown the client
-	return client.shutdown()
+	return cassandra.client.shutdown()
 		.then(doStop);
 };
