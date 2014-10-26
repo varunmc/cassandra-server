@@ -15,6 +15,9 @@ var child;
 // the cassandra client
 var client;
 
+// the cassandra log levels
+var levels = ['trace', 'debug', 'info', 'warn'];
+
 /**
  * Configures the client.
  * @private
@@ -36,12 +39,14 @@ function configureClient(hosts) {
  * @returns {Promise} - a promise that resolves to the merged options
  */
 function resolveOptions(options) {
-	// load defaults
-	return Q.nfcall(fs.readFile, path.resolve('cassandra.json'), 'utf-8')
+	var jsonFileName = path.resolve('cassandra.json');
+	winston.debug('Reading %s for default configuration', jsonFileName);
+
+	return Q.nfcall(fs.readFile, jsonFileName, 'utf-8')
 		.then(function(json) {
 			var defaults = JSON.parse(stripJsonComments(json));
 
-			// merge user options
+			// merging user options
 			for(var property in options) {
 				if(options.hasOwnProperty(property)) {
 					defaults[property] = options[property];
@@ -49,8 +54,9 @@ function resolveOptions(options) {
 			}
 			winston.debug('Resolved cassandra options are:', defaults);
 
-			// create yaml file
-			return Q.nfcall(fs.writeFile, path.resolve('apache-cassandra-2.1.0/conf/cassandra.yaml'), yaml.dump(defaults))
+			var yamlFileName = path.resolve('apache-cassandra-2.1.0/conf/cassandra.yaml');
+			winston.debug('Creating YAML configuration file:', yamlFileName);
+			return Q.nfcall(fs.writeFile, yamlFileName, yaml.dump(defaults))
 				.then(function() {
 					return defaults;
 				});
@@ -121,24 +127,28 @@ cassandra.start = function(options) {
 				if(timeoutId) {
 					clearTimeout(timeoutId);
 					timeoutId = undefined;
-
-					var error = new Error('Could not start cassandra');
-					winston.error(error);
-					deferred.reject(error);
+					deferred.reject();
 				}
-				if(code !== 0) {
-					winston.warn('Cassandra exited with code:', code);
-				}
+				winston.info('Cassandra exited with code:', code);
 			});
 
 			// stderr handler
 			child.stderr.on('data', function(data) {
-				winston.error(data.toString());
+				winston.error(data.toString().replace(/^ERROR /, ''));
 			});
 
 			// stdout listener
 			child.stdout.on('data', function(data) {
-				winston.info(data.toString());
+				var log = data.toString();
+
+				// determine log level and pass through winston
+				for(var index = 0; index < levels.length; index++) {
+					var regexp = new RegExp('^' + levels[index], 'i');
+					if(log.match(regexp)) {
+						winston.log(levels[index], log.replace(regexp, '').trim());
+						break;
+					}
+				}
 			});
 
 			// give it 5 seconds to start
@@ -162,9 +172,6 @@ cassandra.start = function(options) {
 								deferred.reject(error);
 							});
 					})
-					.done(function() {
-						timeoutId = undefined;
-					});
 			}, 5000);
 		});
 
