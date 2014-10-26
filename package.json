@@ -2,26 +2,26 @@
   "name": "cassandra-server",
   "version": "1.0.2",
   "description": "Wrapper around Apache Cassandra to provide out of the box server support",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: No tests specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:varunmc/cassandra-server.git"
-  },
   "keywords": [
     "apache",
     "cassandra",
     "server"
   ],
-  "author": "Varun Chandran <varunmc@gmail.com>",
+  "homepage": "https://www.github.com/varunmc/cassandra-server",
   "bugs": {
     "url": "https://github.com/varunmc/cassandra-server/issues"
   },
   "license": "Apache-2.0",
-  "homepage": "https://www.github.com/varunmc/cassandra-server",
+  "author": "Varun Chandran <varunmc@gmail.com>",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:varunmc/cassandra-server.git"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: No tests specified\" && exit 1"
+  },
   "dependencies": {
     "cassandra-driver": "^1.0.1",
     "fs-extra": "^0.12.0",
