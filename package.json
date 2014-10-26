@@ -20,6 +20,7 @@
   "bugs": {
     "url": "https://github.com/varunmc/cassandra-server/issues"
   },
+  "license": "Apache-2.0",
   "homepage": "https://www.github.com/varunmc/cassandra-server",
   "dependencies": {
     "cassandra-driver": "^1.0.1",

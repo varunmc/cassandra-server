@@ -1,3 +1,5 @@
-data/
-logs/
+# Dynamically generated Cassandra configuration
 conf/cassandra.yaml
+
+# Cassandra database
+data
