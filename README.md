@@ -8,6 +8,7 @@ _A thin Javascript wrapper around [Apache Cassandra][apache-cassandra] to provid
   * [Starting the server](#starting-the-server)
   * [Stopping the server](#stopping-the-server)
   * [Other functions](#other-functions)
+* [Logging](#logging)
 * [Changelog](#changelog)
 
 ## Introduction ##
@@ -68,6 +69,7 @@ cassandra.stop()
 
 #### Nuke ####
 Destroys all data in the database. This action is non-recoverable.
+
 ```javascript
 cassandra.nuke()
     .then(function() {
@@ -77,6 +79,7 @@ cassandra.nuke()
 
 #### Restart ####
 Stops the server, waits three seconds and then starts it again.
+
 ```javascript
 cassandra.restart()
     .then(function(client) {
@@ -84,11 +87,15 @@ cassandra.restart()
     });
 ```
 
+# Logging #
+
+
 # Changelog #
 Visit the [Releases][releases] page for more details.
 
-* 1.1.0 - Added nuke() and restart() functions with additional logging and documentation
-* 1.0.2 - Improved Cassandra logging through appropriate winston log levels
+* 1.1.1 - Bug fixes and updated documentation
+* 1.1.0 - More functions, logging and documentation
+* 1.0.2 - Improved logging through winston
 * 1.0.1 - Bug fixes
 * 1.0.0 - Initial release
 

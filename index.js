@@ -31,12 +31,12 @@ function configureClient(hosts) {
 
 /**
  * Creates a YAML configuration file by merging user options with defaults.
- * @param {Object} options - the user options
+ * @param {Object} options - the server options
  * @private
- * @returns {Promise} - a promise that resolves to the merged options
+ * @returns {Promise} - a promise that resolves to the complete server options
  */
 function resolveOptions(options) {
-	var jsonFileName = path.resolve('cassandra.json');
+	var jsonFileName = path.join(__dirname, 'cassandra.json');
 	winston.debug('Reading default configuration:', jsonFileName);
 
 	return Q.nfcall(fs.readFile, jsonFileName, 'utf-8')
@@ -51,7 +51,7 @@ function resolveOptions(options) {
 			}
 			winston.debug('Resolved Cassandra options are:', defaults);
 
-			var yamlFileName = path.resolve('apache-cassandra-2.1.0/conf/cassandra.yaml');
+			var yamlFileName = path.join(__dirname, 'apache-cassandra-2.1.0', 'conf', 'cassandra.yaml');
 			winston.debug('Creating YAML configuration file:', yamlFileName);
 			return Q.nfcall(fs.writeFile, yamlFileName, yaml.dump(defaults))
 				.then(function() {
@@ -79,9 +79,9 @@ cassandra.nuke = function() {
 		return deferred.promise;
 	}
 
-	winston.warn('Deleting all data in the database');
-	return Q.nfcall(fs.remove, path.resolve('apache-cassandra-2.1.0/data'))
-		.then(Q.nfcall(fs.remove, path.resolve('apache-cassandra-2.1.0/logs')));
+	cassandra.emit('warn', 'Deleting all data in the database');
+	return Q.nfcall(fs.remove, path.join(__dirname, 'apache-cassandra-2.1.0', 'data'))
+		.then(Q.nfcall(fs.remove, path.join(__dirname, 'apache-cassandra-2.1.0', 'logs')));
 };
 
 /**
@@ -110,7 +110,7 @@ cassandra.restart = function() {
 
 /**
  * Starts the server.
- * @param {Object} [options] - the server options
+ * @param {Object} options - the server options
  * @returns {Promise} - a promise that resolves to the Cassandra client
  */
 cassandra.start = function(options) {
@@ -129,7 +129,7 @@ cassandra.start = function(options) {
 	resolveOptions(options)
 		// start the server
 		.then(function(merged) {
-			child = childProcess.spawn(path.resolve('apache-cassandra-2.1.0/bin/cassandra'), ['-f']);
+			child = childProcess.spawn(path.join(__dirname, 'apache-cassandra-2.1.0', 'bin', 'cassandra'), ['-f']);
 
 			// error handler
 			child.on('error', function(err) {
