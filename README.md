@@ -1,7 +1,7 @@
 # Cassandra-Server [![dependencies][david-image]][david-url] 
 [![npm][npm-image]][npm-url] [![downloads][downloads-image]][downloads-url]
 
-A thin Javascript wrapper around [Apache Cassandra][apache-cassandra] to provide out of the box server support
+A thin Javascript wrapper around [Apache Cassandra][apache-cassandra] to provide out of the box server support.
 
 * [Introduction](#introduction)
 * [Requirements](#requirements)
@@ -12,7 +12,7 @@ A thin Javascript wrapper around [Apache Cassandra][apache-cassandra] to provide
 * [Logging](#logging)
 * [Changelog](#changelog)
 
-Thoughts, comments or concerns? [![Gitter][gitter-image]][gitter-url]
+Questions, comments or concerns? [![Gitter][gitter-image]][gitter-url]
 
 ## Introduction ##
 Control a local Cassandra server with Javascript. Typical server lifecycle methods are included (start, stop, restart) along with other convenience methods.
