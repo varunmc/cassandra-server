@@ -75,7 +75,7 @@ cassandra.nuke()
 ```
 
 #### Restart ####
-Stops the server, waits three seconds and then starts it again.
+Stops the server, waits three seconds anlid then starts it again.
 
 ```javascript
 cassandra.restart()
@@ -85,7 +85,7 @@ cassandra.restart()
 ```
 
 # Logging #
-Cassandra is an [Event Emitter][event-emitter] that emits events in response to log messages and errors from the server. Events can be listened to using the ```on``` method like so:
+Cassandra is an [Event Emitter][event-emitter] that emits events in response to log messages and errors from the server. Events can be listened to using the ```on``` method:
 
 ```javascript
 cassandra.on('eventName', function(message) {
@@ -123,6 +123,7 @@ _Emitted when an error occurred with the Cassandra process_
 # Changelog #
 Visit the [Releases][releases] page for more details.
 
+* 1.2.1 - Updated documentation
 * 1.2.0 - Converted logs into events and removed winston
 * 1.1.0 - More functions, logging and documentation
 * 1.0.2 - Improved logging through winston
