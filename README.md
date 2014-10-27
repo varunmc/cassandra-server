@@ -1,9 +1,10 @@
 # Cassandra-Server [![dependencies][david-image]][david-url] 
-_A thin Javascript wrapper around [Apache Cassandra][apache-cassandra] to provide out of the box server support_
+[![npm][npm-image]][npm-url][![downloads][downloads-image]][downloads-url]
+
+A thin Javascript wrapper around [Apache Cassandra][apache-cassandra] to provide out of the box server support
 
 * [Introduction](#introduction)
 * [Requirements](#requirements)
-* [Installation](#installation)
 * [Usage](#usage)
   * [Starting the server](#starting-the-server)
   * [Stopping the server](#stopping-the-server)
@@ -20,12 +21,6 @@ This module comes bundled with Cassandra v2.1.0 which works with Cassandra Query
 
 ## Requirements ##
 Cassandra v2.x requires that [Java7][java7] or higher be installed and available on the PATH.
-
-## Installation ##
-```sh
-$ npm install cassandra-server
-```
-[![version][npm-image]][npm-url]
 
 ## Usage ##
 The Cassandra server uses [Q][q] promises to defer execution and communicate it's status to the client.
@@ -136,13 +131,15 @@ Visit the [Releases][releases] page for more details.
 
 [david-image]: https://david-dm.org/varunmc/cassandra-server.svg?style=flat
 [david-url]: https://david-dm.org/varunmc/cassandra-server
+[npm-image]: https://nodei.co/npm/cassandra-server.png?downloads=true&downloadRank=true&stars=true
+[npm-url]: https://nodei.co/npm/cassandra-server
+[downloads-image]: https://nodei.co/npm-dl/cassandra-server.png?months=1&height=3
+[downloads-url]: https://nodei.co/npm/cassandra-server
 [apache-cassandra]: http://cassandra.apache.org
 [gitter-image]: https://badges.gitter.im/Join%20Chat.svg
 [gitter-url]: https://gitter.im/varunmc/cassandra-server?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 [cql3]: http://www.datastax.com/documentation/cql/3.1/cql/cql_intro_c.html
 [java7]: http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
-[npm-image]: http://img.shields.io/npm/v/cassandra-server.svg?style=flat
-[npm-url]: https://npmjs.org/package/cassandra-server
 [q]: https://github.com/kriskowal/q
 [datastax-cassandra-driver]: https://github.com/datastax/nodejs-driver
 [cassandra-json]: https://cdn.rawgit.com/varunmc/cassandra-server/master/cassandra.json
