@@ -123,6 +123,7 @@ _Emitted when an error occurred with the Cassandra process_
 # Changelog #
 Visit the [Releases][releases] page for more details.
 
+* 1.3.0 - Dynamic configuration of client contact points
 * 1.2.1 - Updated documentation
 * 1.2.0 - Converted logs into events and removed winston
 * 1.1.0 - More functions, logging and documentation

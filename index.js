@@ -193,8 +193,8 @@ cassandra.start = function(options) {
 
 			// give it 5 seconds to start
 			timeoutId = setTimeout(function() {
-				// TODO: read this from merged options
-				configureClient(['localhost']);
+				var seeds = merged.seed_provider[0].parameters[0].seeds;
+				configureClient(seeds.split(','));
 
 				// resolve the startup promise when the client connects
 				cassandra.client.connect()
@@ -251,4 +251,3 @@ cassandra.stop = function() {
 	return cassandra.client.shutdown()
 		.then(doStop);
 };
-
