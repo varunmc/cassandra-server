@@ -42,7 +42,7 @@ cassandra.start()
     });
 ```
 
-The ```client``` returned is a _promisified_ instance of the [Datastax Cassandra driver][datastax-cassandra-driver] connected to the running server. It is also available at ```cassandra.client``` after successful startup which is otherwise **undefined**.
+The ```client``` returned is a _promisified_ instance of the [Datastax Cassandra driver][datastax-cassandra-driver] connected to the running server facilitating easy chaining of query promises. It is also available at ```cassandra.client``` after successful startup which is otherwise, **_undefined_**.
 
 The start function optionally accepts an ```options``` object that overrides the defaults. The following example starts a new cluster called "My Cluster" listening on w.x.y.z leaving the remaining defaults unchanged:
 
@@ -53,7 +53,7 @@ cassandra.start({
     });
 ```
 
-[cassandra.json][cassandra-json] serves as the default configuration for any server. This file is simply a JSON port of the standard YAML configuration that comes bundled with a typical installation.
+[cassandra.json][cassandra-json] provides the default configuration for the server. The file is simply a cJSON port of the standard YAML configuration that comes bundled with a typical installation.
 
 ### Stopping the server ###
 Stopping the server is just as easy:
@@ -88,12 +88,45 @@ cassandra.restart()
 ```
 
 # Logging #
+Cassandra is an [Event Emitter][event-emitter] that emits events in response to log messages and errors from the server. Events can be listened to using the ```on``` method like so:
 
+```javascript
+cassandra.on('eventName', function(message) {
+    console.log(message);
+});
+```
+
+Following is a brief synopsis of all events emitted:
+
+### Event: 'debug' ###
+_Emitted when a debug log message is available_
+
+* **message** - the debug message
+
+### Event: 'info' ###
+_Emitted when an info log message is available_
+
+* **message** - the info message
+
+### Event: 'warn' ###
+_Emitted when a warning log message is available_
+
+* **message** - the warning message
+
+### Event: 'stderr' ###
+_Emitted when a log message is available on standard error_
+
+* **message** - the error message
+
+### Event: 'error' ###
+_Emitted when an error occurred with the Cassandra process_
+
+* **error** - the [Error][error] object
 
 # Changelog #
 Visit the [Releases][releases] page for more details.
 
-* 1.1.1 - Bug fixes and updated documentation
+* 1.2.0 - Converted logs into events and removed winston
 * 1.1.0 - More functions, logging and documentation
 * 1.0.2 - Improved logging through winston
 * 1.0.1 - Bug fixes
@@ -107,4 +140,6 @@ Visit the [Releases][releases] page for more details.
 [q]: https://github.com/kriskowal/q
 [datastax-cassandra-driver]: https://github.com/datastax/nodejs-driver
 [cassandra-json]: https://cdn.rawgit.com/varunmc/cassandra-server/master/cassandra.json
+[event-emitter]: http://nodejs.org/api/events.html
+[error]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
 [releases]: https://github.com/varunmc/cassandra-server/releases
