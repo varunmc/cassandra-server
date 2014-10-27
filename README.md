@@ -1,4 +1,4 @@
-# Cassandra-Server [![version][npm-image]][npm-url] [![Gitter][gitter-image]][gitter-url]
+# Cassandra-Server [![version][npm-image]][npm-url] [![dependencies][david-image]][david-url] [![Gitter][gitter-image]][gitter-url]
 _A thin Javascript wrapper around [Apache Cassandra][apache-cassandra] to provide out of the box server support_
 
 * [Introduction](#introduction)
@@ -133,6 +133,8 @@ Visit the [Releases][releases] page for more details.
 
 [npm-image]: http://img.shields.io/npm/v/cassandra-server.svg?style=flat
 [npm-url]: https://npmjs.org/package/cassandra-server
+[david-image]: https://david-dm.org/varunmc/cassandra-server.svg?style=flat
+[david-url]: https://david-dm.org/varunmc/cassandra-server
 [gitter-image]: https://badges.gitter.im/Join%20Chat.svg
 [gitter-url]: https://gitter.im/varunmc/cassandra-server?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 [apache-cassandra]: http://cassandra.apache.org
