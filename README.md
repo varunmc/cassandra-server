@@ -1,4 +1,5 @@
 # Cassandra-Server #
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/varunmc/cassandra-server?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 _A thin Javascript wrapper around [Apache Cassandra][apache-cassandra] to provide out of the box server support_
 
 * [Introduction](#introduction)
