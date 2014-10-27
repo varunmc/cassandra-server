@@ -1,5 +1,4 @@
-# Cassandra-Server #
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/varunmc/cassandra-server?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# Cassandra-Server [![version][npm-image]][npm-url] [![Gitter][gitter-image]][gitter-url]
 _A thin Javascript wrapper around [Apache Cassandra][apache-cassandra] to provide out of the box server support_
 
 * [Introduction](#introduction)
@@ -24,7 +23,6 @@ Cassandra v2.x requires that [Java7][java7] or higher be installed and available
 ```sh
 $ npm install cassandra-server
 ```
-[![NPM version][npm-image]][npm-url]
 
 ## Usage ##
 The Cassandra server uses [Q][q] promises to defer execution and communicate it's status to the client.
@@ -133,11 +131,13 @@ Visit the [Releases][releases] page for more details.
 * 1.0.1 - Bug fixes
 * 1.0.0 - Initial release
 
+[npm-image]: http://img.shields.io/npm/v/cassandra-server.svg?style=flat
+[npm-url]: https://npmjs.org/package/cassandra-server
+[gitter-image]: https://badges.gitter.im/Join%20Chat.svg
+[gitter-url]: https://gitter.im/varunmc/cassandra-server?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 [apache-cassandra]: http://cassandra.apache.org
 [cql3]: http://www.datastax.com/documentation/cql/3.1/cql/cql_intro_c.html
 [java7]: http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
-[npm-image]: http://img.shields.io/npm/v/cassandra-server.svg?style=flat
-[npm-url]: https://npmjs.org/package/cassandra-server
 [q]: https://github.com/kriskowal/q
 [datastax-cassandra-driver]: https://github.com/datastax/nodejs-driver
 [cassandra-json]: https://cdn.rawgit.com/varunmc/cassandra-server/master/cassandra.json
