@@ -1,5 +1,5 @@
 # Cassandra-Server [![dependencies][david-image]][david-url] 
-[![npm][npm-image]][npm-url] [![downloads][downloads-image]][downloads-url]
+[![npm][npm-image]][npm-url]
 
 A thin Javascript wrapper around [Apache Cassandra][apache-cassandra] to provide out of the box server support.
 
@@ -133,8 +133,6 @@ Visit the [Releases][releases] page for more details.
 [david-url]: https://david-dm.org/varunmc/cassandra-server
 [npm-image]: https://nodei.co/npm/cassandra-server.png?downloads=true&downloadRank=true&stars=true
 [npm-url]: https://nodei.co/npm/cassandra-server
-[downloads-image]: https://nodei.co/npm-dl/cassandra-server.png?months=1&height=3
-[downloads-url]: https://nodei.co/npm/cassandra-server
 [apache-cassandra]: http://cassandra.apache.org
 [gitter-image]: https://badges.gitter.im/Join%20Chat.svg
 [gitter-url]: https://gitter.im/varunmc/cassandra-server?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
