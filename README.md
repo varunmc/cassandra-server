@@ -39,7 +39,7 @@ cassandra.start()
     });
 ```
 
-The ```client``` returned is a _promisified_ instance of the [Datastax Cassandra driver][datastax-cassandra-driver] connected to the running server facilitating easy chaining of query promises. It is also available at ```cassandra.client``` after successful startup which is otherwise, **_undefined_**.
+The ```client``` returned is a _promisified_ instance of the [Datastax Cassandra driver][datastax-cassandra-driver] connected to the running server facilitating easy chaining of query promises. It is also accessible at ```cassandra.client``` on server start.
 
 The start function optionally accepts an ```options``` object that overrides the defaults. The following example starts a new cluster called "My Cluster" listening on w.x.y.z leaving the remaining defaults unchanged:
 

@@ -127,7 +127,7 @@ cassandra.start = function(options) {
 		return deferred.resolve(cassandra.client);
 	}
 
-	cassandra.emit('info', 'Starting Cassandra with options: ' + options);
+	cassandra.emit('info', 'Starting Cassandra with options: ' + JSON.stringify(options));
 	resolveOptions(options)
 		// start the server
 		.then(function(merged) {
