@@ -61,7 +61,7 @@ function resolveOptions(options) {
 					defaults[property] = options[property];
 				}
 			}
-			cassandra.emit('debug', 'Resolved Cassandra options are: ' + defaults);
+			cassandra.emit('debug', 'Resolved Cassandra options are: ' + JSON.stringify(defaults));
 
 			var yamlFileName = path.join(__dirname, 'apache-cassandra-2.1.0', 'conf', 'cassandra.yaml');
 			cassandra.emit('debug', 'Creating YAML configuration file: ' + yamlFileName);

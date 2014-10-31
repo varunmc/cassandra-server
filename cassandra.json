@@ -57,7 +57,6 @@
     "tombstone_failure_threshold": 100000,
     "column_index_size_in_kb": 64,
     "batch_size_warn_threshold_in_kb": 5,
-    "batch_size_fail_threshold_in_kb": 50,
     "compaction_throughput_mb_per_sec": 16,
     "sstable_preemptive_open_interval_in_mb": 50,
     "read_request_timeout_in_ms": 5000,
@@ -75,14 +74,14 @@
     "request_scheduler": "org.apache.cassandra.scheduler.NoScheduler",
     "server_encryption_options": {
         "internode_encryption": "none",
-        "keystore": "conf/.keystore",
+        "keystore": "conf\/.keystore",
         "keystore_password": "cassandra",
-        "truststore": "conf/.truststore",
+        "truststore": "conf\/.truststore",
         "truststore_password": "cassandra"
     },
     "client_encryption_options": {
         "enabled": false,
-        "keystore": "conf/.keystore",
+        "keystore": "conf\/.keystore",
         "keystore_password": "cassandra"
     },
     "internode_compression": "all",
