@@ -88,7 +88,7 @@ cassandra.restart()
 # Configuration #
 The following is an exhaustive listing of Cassandra's options and their default values. The **Config Overview** section of the [Storage Configuration][storage-configuration] page has further details on some of the more interesting options.
 
-```js
+```javascript
 {
 	// The name of the cluster. This is mainly used to prevent machines in
 	// one logical cluster from joining another.

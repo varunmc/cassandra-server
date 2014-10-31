@@ -14,6 +14,12 @@ var child;
 // the Cassandra log levels
 var levels = ['debug', 'info', 'warn'];
 
+// the amount of time to wait before restarting the server
+var restartWaitTime = 3000;
+
+// the amount of time to wait before connecting the client
+var startWaitTime = 5000;
+
 /**
  * Configures the client.
  * @private
@@ -29,10 +35,17 @@ function configureClient(hosts) {
 }
 
 /**
- * Creates a YAML configuration file by merging user options with defaults.
- * @param {Object} options - the server options
+ * Creates a YAML configuration file after overriding defaults with user options.
+ *
+ * <p>
+ *     Cassandra expects it's configuration to reside in $CASSANDRA_DIR/conf/cassandra.yaml.
+ *     After loading the default options from cassandra.json and overriding them with user provided options,
+ *     this function converts the final object to YAML and writes it to the target location.
+ * </p>
+ *
+ * @param {Object} options - the user options
  * @private
- * @returns {Promise} - a promise that resolves to the complete server options
+ * @returns {Promise} - a promise that resolves to the merged server options
  */
 function resolveOptions(options) {
 	var jsonFileName = path.join(__dirname, 'cassandra.json');
@@ -42,7 +55,7 @@ function resolveOptions(options) {
 		.then(function(json) {
 			var defaults = JSON.parse(json);
 
-			// merging user options
+			// overriding default options
 			for(var property in options) {
 				if(options.hasOwnProperty(property)) {
 					defaults[property] = options[property];
@@ -56,7 +69,7 @@ function resolveOptions(options) {
 				.then(function() {
 					return defaults;
 				});
-		})
+		});
 }
 
 var cassandra = Object.create(EventEmitter.prototype);
@@ -94,7 +107,7 @@ cassandra.restart = function() {
 
 	cassandra.stop()
 		.then(function() {
-			cassandra.emit('info', 'Waiting three seconds before starting');
+			cassandra.emit('info', 'Waiting ' + restartWaitTime + ' seconds before starting');
 			setTimeout(function() {
 				cassandra.start()
 					.then(function(client) {
@@ -103,7 +116,7 @@ cassandra.restart = function() {
 					.catch(function(err) {
 						deferred.reject(err);
 					});
-			}, 3000);
+			}, restartWaitTime);
 		});
 
 	return deferred.promise;
@@ -138,7 +151,7 @@ cassandra.start = function(options) {
 				error.cause = err;
 				cassandra.emit('error', error);
 
-				// if we're starting up
+				// if we're starting up then reject the promise
 				if(timeoutId) {
 					clearTimeout(timeoutId);
 					timeoutId = undefined;
@@ -150,7 +163,7 @@ cassandra.start = function(options) {
 			child.on('exit', function(code) {
 				cassandra.emit('info', 'Cassandra exited with code: ' + code);
 
-				// if we're starting up
+				// if we're starting up then reject the promise
 				if(timeoutId) {
 					clearTimeout(timeoutId);
 					timeoutId = undefined;
@@ -163,7 +176,7 @@ cassandra.start = function(options) {
 				cassandra.emit('stderr', data.toString());
 			});
 
-			// track the last level logged
+			// track the last log level and use it for lines that don't have a log level prefix
 			var lastLevel;
 
 			// stdout listener
@@ -190,7 +203,7 @@ cassandra.start = function(options) {
 				}
 			});
 
-			// give it 5 seconds to start
+			// give it time to start
 			timeoutId = setTimeout(function() {
 				var seeds = merged.seed_provider[0].parameters[0].seeds;
 				configureClient(seeds.split(','));
@@ -215,7 +228,7 @@ cassandra.start = function(options) {
 								deferred.reject(error);
 							});
 					})
-			}, 5000);
+			}, startWaitTime);
 		});
 
 	return deferred.promise;
