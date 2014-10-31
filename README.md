@@ -86,7 +86,7 @@ cassandra.restart()
 ```
 
 # Configuration #
-The following is an exhaustive listing of Cassandra's options and their default values. The **Config Overview** section of the [Storage Configuration][storage-configuration] page has further details on some of the more interesting options.
+The following is an exhaustive listing of Cassandra's options and their default values. The **Config Overview** section on the [Storage Configuration][storage-configuration] page has further details on some of the more interesting options.
 
 ```javascript
 {
@@ -887,6 +887,7 @@ _Emitted when an error occurred with the Cassandra process_
 # Changelog #
 Visit the [Releases][releases] page for more details.
 
+* [v1.3.1](https://github.com/varunmc/cassandra-server/tree/v1.3.1) - Updated documentation
 * [v1.3.0](https://github.com/varunmc/cassandra-server/tree/v1.3.0) - Dynamic configuration of client contact points
 * [v1.2.1](https://github.com/varunmc/cassandra-server/tree/v1.2.1) - Updated documentation
 * [v1.2.0](https://github.com/varunmc/cassandra-server/tree/v1.2.0) - Converted logs into events and removed winston
