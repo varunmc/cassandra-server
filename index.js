@@ -6,7 +6,6 @@ var childProcess = require('child_process'),
 	fs = require('fs-extra'),
 	path = require('path'),
 	Q = require('q'),
-	stripJsonComments = require('strip-json-comments'),
 	yaml = require('js-yaml');
 
 // the server process
@@ -41,7 +40,7 @@ function resolveOptions(options) {
 
 	return Q.nfcall(fs.readFile, jsonFileName, 'utf-8')
 		.then(function(json) {
-			var defaults = JSON.parse(stripJsonComments(json));
+			var defaults = JSON.parse(json);
 
 			// merging user options
 			for(var property in options) {
