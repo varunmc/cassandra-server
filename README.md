@@ -40,7 +40,7 @@ cassandra.start()
     });
 ```
 
-The ```client``` returned is a _promisified_ instance of the [Datastax Cassandra driver][datastax-cassandra-driver] connected to the running server facilitating chaining of queries. It is also accessible at ```cassandra.client``` on server start.
+The ```client``` returned is a _promisified_ instance of the [Datastax Cassandra driver][datastax-cassandra-driver] to which subsequent query promises can be chained. It is also accessible directly at ```cassandra.client```.
 
 The start function optionally accepts an ```options``` object that overrides the defaults. The following example starts a new cluster called "My Cluster" listening on w.x.y.z leaving the remaining defaults unchanged:
 
@@ -51,7 +51,7 @@ cassandra.start({
     });
 ```
 
-The [Configuration](#configuration) section details all options available.
+The [Configuration](#configuration) section details all the options available.
 
 ### Stopping the server ###
 Stopping the server is just as easy:
@@ -86,7 +86,7 @@ cassandra.restart()
 ```
 
 # Configuration #
-The following is an exhaustive listing of Cassandra's options and their default values. The **Config Overview** section of Cassandra's [Storage Configuration][storage-configuration] has further details on some of the more interesting options.
+The following is an exhaustive listing of Cassandra's options and their default values. The **Config Overview** section of the [Storage Configuration][storage-configuration] page has further details on some of the more interesting options.
 
 ```js
 {
@@ -887,13 +887,13 @@ _Emitted when an error occurred with the Cassandra process_
 # Changelog #
 Visit the [Releases][releases] page for more details.
 
-* 1.3.0 - Dynamic configuration of client contact points
-* 1.2.1 - Updated documentation
-* 1.2.0 - Converted logs into events and removed winston
-* 1.1.0 - More functions, logging and documentation
-* 1.0.2 - Improved logging through winston
-* 1.0.1 - Bug fixes
-* 1.0.0 - Initial release
+* [v1.3.0](https://github.com/varunmc/cassandra-server/tree/v1.3.0) - Dynamic configuration of client contact points
+* [v1.2.1](https://github.com/varunmc/cassandra-server/tree/v1.2.1) - Updated documentation
+* [v1.2.0](https://github.com/varunmc/cassandra-server/tree/v1.2.0) - Converted logs into events and removed winston
+* [v1.1.0](https://github.com/varunmc/cassandra-server/tree/v1.1.0) - More functions, logging and documentation
+* [v1.0.2](https://github.com/varunmc/cassandra-server/tree/v1.0.2) - Improved logging through winston
+* [v1.0.1](https://github.com/varunmc/cassandra-server/tree/v1.0.1) - Bug fixes
+* [v1.0.0](https://github.com/varunmc/cassandra-server/tree/v1.0.0) - Initial release
 
 [npm-image]: https://nodei.co/npm/cassandra-server.png?downloads=true&downloadRank=true&stars=true
 [npm-url]: https://nodei.co/npm/cassandra-server
@@ -907,8 +907,6 @@ Visit the [Releases][releases] page for more details.
 [q]: https://github.com/kriskowal/q
 [datastax-cassandra-driver]: https://github.com/datastax/nodejs-driver
 [storage-configuration]: http://wiki.apache.org/cassandra/StorageConfiguration
-[operations]: http://wiki.apache.org/cassandra/Operations
-[hinted-handoff]: http://wiki.apache.org/cassandra/HintedHandoff
 [event-emitter]: http://nodejs.org/api/events.html
 [error]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
 [releases]: https://github.com/varunmc/cassandra-server/releases
