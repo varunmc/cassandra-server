@@ -27,20 +27,20 @@ Cassandra v2.x requires that [Java7][java7] or higher be installed and available
 The Cassandra server uses [Q][q] promises to defer execution and communicate it's status to the client.
 
 ### Starting the server ###
-Simply do the following to start a new Cassandra server with default options. This will create a new cluster called "Test Cluster" listening on the loopback:
+Simply do the following to start a new Cassandra server with default options. This will create a new cluster called "Test Cluster" listening on the loopback on port 9160:
 
 ```javascript
 var cassandra = require('cassandra-server');
 cassandra.start()
-    .then(function(client) {
-        // do something with the client
+    .then(function() {
+        // continue
     })
     .catch(function(err) {
         console.error(err);
     });
 ```
 
-The ```client``` returned is a _promisified_ instance of the [Datastax Cassandra driver][datastax-cassandra-driver] to which subsequent query promises can be chained. It is also accessible directly at ```cassandra.client```.
+You can then use a client such as the [Datastax Cassandra driver][datastax-cassandra-driver] to establish a connection and execute queries.
 
 The start function optionally accepts an ```options``` object that overrides the defaults. The following example starts a new cluster called "My Cluster" listening on w.x.y.z leaving the remaining defaults unchanged:
 
@@ -80,8 +80,8 @@ Stops the server, waits three seconds and then starts it again.
 
 ```javascript
 cassandra.restart()
-    .then(function(client) {
-        // do something with the client
+    .then(function() {
+        // continue
     });
 ```
 
@@ -887,6 +887,7 @@ _Emitted when an error occurred with the Cassandra process_
 # Changelog #
 Visit the [Releases][releases] page for more details.
 
+* [v2.0.0](https://github.com/varunmc/cassandra-server/tree/v2.0.0) - Discontinued providing recommended client
 * [v1.3.1](https://github.com/varunmc/cassandra-server/tree/v1.3.1) - Updated documentation
 * [v1.3.0](https://github.com/varunmc/cassandra-server/tree/v1.3.0) - Dynamic configuration of client contact points
 * [v1.2.1](https://github.com/varunmc/cassandra-server/tree/v1.2.1) - Updated documentation

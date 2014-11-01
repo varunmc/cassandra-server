@@ -11,6 +11,9 @@ var childProcess = require('child_process'),
 // the server process
 var child;
 
+// the Cassandra client
+var client;
+
 // the Cassandra log levels
 var levels = ['debug', 'info', 'warn'];
 
@@ -19,20 +22,6 @@ var restartWaitTime = 3000;
 
 // the amount of time to wait before connecting the client
 var startWaitTime = 5000;
-
-/**
- * Configures the client.
- * @private
- * @param {string[]} hosts - the list of contact points
- */
-function configureClient(hosts) {
-	cassandra.client = new Client({contactPoints: hosts});
-
-	// promisify client methods
-	cassandra.client.connect = Q.nbind(cassandra.client.connect, cassandra.client);
-	cassandra.client.execute = Q.nbind(cassandra.client.execute, cassandra.client);
-	cassandra.client.shutdown = Q.nbind(cassandra.client.shutdown, cassandra.client);
-}
 
 /**
  * Creates a YAML configuration file after overriding defaults with user options.
@@ -74,9 +63,6 @@ function resolveOptions(options) {
 
 var cassandra = Object.create(EventEmitter.prototype);
 module.exports = cassandra;
-
-// the Cassandra client
-cassandra.client = undefined;
 
 /**
  * Nukes the entire database.
@@ -136,7 +122,7 @@ cassandra.start = function(options) {
 	// if already started
 	if(child) {
 		cassandra.emit('info', 'Cassandra is already started');
-		return deferred.resolve(cassandra.client);
+		return deferred.resolve();
 	}
 
 	cassandra.emit('info', 'Starting Cassandra with options: ' + JSON.stringify(options));
@@ -206,14 +192,14 @@ cassandra.start = function(options) {
 			// give it time to start
 			timeoutId = setTimeout(function() {
 				var seeds = merged.seed_provider[0].parameters[0].seeds;
-				configureClient(seeds.split(','));
+				client = new Client({contactPoints: seeds});
 
 				// resolve the startup promise when the client connects
-				cassandra.client.connect()
+				Q.ninvoke(client, 'connect')
 					.then(function() {
 						timeoutId = undefined;
 						cassandra.emit('info', 'Server started');
-						deferred.resolve(cassandra.client);
+						deferred.resolve();
 					})
 					.catch(function(err) {
 						timeoutId = undefined;
@@ -250,16 +236,16 @@ cassandra.stop = function() {
 		cassandra.emit('info', 'Stopping Cassandra');
 
 		child.kill();
-		child = cassandra.client = undefined;
+		child = client = undefined;
 		return Q();
 	}
 
 	// if the client couldn't connect
-	if(!cassandra.client) {
+	if(!client) {
 		return doStop();
 	}
 
 	// shutdown the client
-	return cassandra.client.shutdown()
+	return Q.ninvoke(client, 'shutdown')
 		.then(doStop);
 };
