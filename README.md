@@ -849,44 +849,24 @@ The following is an exhaustive listing of Cassandra's options and their default 
 ```
 
 # Logging #
-Cassandra is an [Event Emitter][event-emitter] that emits events in response to log messages and errors from the server. Events can be listened to using the ```on``` method:
+Cassandra is an [Event Emitter][event-emitter] that emits a log events in response to messages and errors from the server. Events can be listened to using the ```on``` method:
 
 ```javascript
-cassandra.on('eventName', function(message) {
-    console.log(message);
+cassandra.on('log', function(level, message) {
+	if(level === 'error') {
+		console.error(message.stack);
+	} else {
+	    console.log(level, ':', message);
+	}
 });
 ```
 
-Following is a brief synopsis of all events emitted:
-
-### Event: 'debug' ###
-_Emitted when a debug log message is available_
-
-* **message** - the debug message
-
-### Event: 'info' ###
-_Emitted when an info log message is available_
-
-* **message** - the info message
-
-### Event: 'warn' ###
-_Emitted when a warning log message is available_
-
-* **message** - the warning message
-
-### Event: 'stderr' ###
-_Emitted when a log message is available on standard error_
-
-* **message** - the error message
-
-### Event: 'error' ###
-_Emitted when an error occurred with the Cassandra process_
-
-* **error** - the [Error][error] object
+The different log levels are: 'debug', 'info', 'warn', 'stderr' and 'error'. `message` is a string describing the log entry for all levels except in the case of 'error' where the `message` is an [Error][error] object.
 
 # Changelog #
 Visit the [Releases][releases] page for more details.
 
+* [v2.1.0](https://github.com/varunmc/cassandra-server/tree/v2.1.0) - Consolidated all log events into one
 * [v2.0.0](https://github.com/varunmc/cassandra-server/tree/v2.0.0) - Discontinued providing recommended client
 * [v1.3.1](https://github.com/varunmc/cassandra-server/tree/v1.3.1) - Updated documentation
 * [v1.3.0](https://github.com/varunmc/cassandra-server/tree/v1.3.0) - Dynamic configuration of client contact points
