@@ -849,7 +849,7 @@ The following is an exhaustive listing of Cassandra's options and their default 
 ```
 
 # Logging #
-Cassandra is an [Event Emitter][event-emitter] that emits a log events in response to messages and errors from the server. Events can be listened to using the ```on``` method:
+```cassandra``` is an [Event Emitter][event-emitter] that emits a log events in response to messages and errors from the server. Events can be listened to using the ```on``` method:
 
 ```javascript
 cassandra.on('log', function(level, message) {
@@ -861,7 +861,7 @@ cassandra.on('log', function(level, message) {
 });
 ```
 
-The different log levels are: 'debug', 'info', 'warn', 'stderr' and 'error'. `message` is a string describing the log entry for all levels except in the case of 'error' where the `message` is an [Error][error] object.
+The different log levels are: 'debug', 'info', 'warn', 'stderr' and 'error'. `message` is a string describing the log entry for all levels except in the case of 'error' where `message` is an [Error][error] object.
 
 # Changelog #
 Visit the [Releases][releases] page for more details.
