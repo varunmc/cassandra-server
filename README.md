@@ -849,7 +849,7 @@ The following is an exhaustive listing of Cassandra's options and their default 
 ```
 
 # Logging #
-```cassandra``` is an [Event Emitter][event-emitter] that emits a log events in response to messages and errors from the server. Events can be listened to using the ```on``` method:
+```cassandra``` is an [Event Emitter][event-emitter] that emits a log event in response to messages and errors from the server. Events can be listened to using the ```on``` method:
 
 ```javascript
 cassandra.on('log', function(level, message) {
@@ -861,11 +861,12 @@ cassandra.on('log', function(level, message) {
 });
 ```
 
-The different log levels are: 'debug', 'info', 'warn', 'stderr' and 'error'. `message` is a string describing the log entry for all levels except in the case of 'error' where `message` is an [Error][error] object.
+The different log levels are: 'debug', 'info', 'warn', 'stderr' and 'error'. `message` is a string describing the log entry for all log levels except in the case of 'error' where `message` is an [Error][error] object.
 
 # Changelog #
 Visit the [Releases][releases] page for more details.
 
+* [v2.2.0](https://github.com/varunmc/cassandra-server/tree/v2.2.0) - Added options parameter to ```cassandra.restart```
 * [v2.1.0](https://github.com/varunmc/cassandra-server/tree/v2.1.0) - Consolidated all log events into one
 * [v2.0.0](https://github.com/varunmc/cassandra-server/tree/v2.0.0) - Discontinued providing recommended client
 * [v1.3.1](https://github.com/varunmc/cassandra-server/tree/v1.3.1) - Updated documentation

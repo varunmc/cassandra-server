@@ -86,16 +86,17 @@ cassandra.nuke = function() {
 
 /**
  * Restarts the server.
+ * @param {Object} [options] - the server options
  * @returns {Promise} - a promise that resolves to the Cassandra client
  */
-cassandra.restart = function() {
+cassandra.restart = function(options) {
 	var deferred = Q.defer();
 
 	cassandra.stop()
 		.then(function() {
 			cassandra.emit('log', 'info', 'Waiting ' + restartWaitTime + ' seconds before starting');
 			setTimeout(function() {
-				cassandra.start()
+				cassandra.start(options)
 					.then(function(client) {
 						deferred.resolve(client);
 					})
@@ -110,7 +111,7 @@ cassandra.restart = function() {
 
 /**
  * Starts the server.
- * @param {Object} options - the server options
+ * @param {Object} [options] - the server options
  * @returns {Promise} - a promise that resolves to the Cassandra client
  */
 cassandra.start = function(options) {
