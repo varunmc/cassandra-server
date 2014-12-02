@@ -27,7 +27,7 @@ Cassandra v2.x requires that [Java7][java7] or higher be installed and available
 The Cassandra server uses [Q][q] promises to defer execution and communicate it's status to the client.
 
 ### Starting the server ###
-Simply do the following to start a new Cassandra server with default options. This will create a new cluster called "Test Cluster" listening on the loopback on port 9160:
+Simply do the following to start a new Cassandra server with default options. This will create a new cluster called "Test Cluster" listening on the loopback on port 9042:
 
 ```javascript
 var cassandra = require('cassandra-server');
@@ -46,9 +46,9 @@ The start function optionally accepts an ```options``` object that overrides the
 
 ```javascript
 cassandra.start({
-        cluster_name: "My Cluster",
-        listen_address: "w.x.y.z"
-    });
+	cluster_name: "My Cluster",
+	listen_address: "w.x.y.z"
+});
 ```
 
 The [Configuration](#configuration) section details all the options available.
@@ -79,7 +79,7 @@ cassandra.nuke()
 Stops the server, waits three seconds and then starts it again.
 
 ```javascript
-cassandra.restart()
+cassandra.restart({ /* options */ })
     .then(function() {
         // continue
     });
