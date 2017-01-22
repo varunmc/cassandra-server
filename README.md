@@ -3,7 +3,7 @@ _A thin Javascript wrapper around [Apache Cassandra][apache-cassandra] to provid
 
 [![npm][npm-image]][npm-url] [![dependencies][david-image]][david-url]
 
-**_This project is not being maintained_**
+**_This project is not being actively maintained._**
 
 * [Introduction](#introduction)
 * [Requirements](#requirements)
