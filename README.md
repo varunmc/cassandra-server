@@ -1,7 +1,9 @@
 # Cassandra-Server #
-_A thin Javascript wrapper around [Apache Cassandra][apache-cassandra] to provide out of the box server support._
+_A thin Javascript wrapper around [Apache Cassandra][apache-cassandra] to provide out of the box server support_
 
 [![npm][npm-image]][npm-url] [![dependencies][david-image]][david-url]
+
+**_This project is not being maintained_**
 
 * [Introduction](#introduction)
 * [Requirements](#requirements)
